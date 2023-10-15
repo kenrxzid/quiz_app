@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class StartScreen extends StatelessWidget {
-  const StartScreen({super.key});
+  const StartScreen({required this.startQuiz, super.key});
+
+  final void Function() startQuiz;
 
   @override
   Widget build(context) {
+    String title = "Learn Quiz App ";
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -15,24 +19,23 @@ class StartScreen extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.only(top: 60, bottom: 40),
-            child: const Text(
-              "Learn Flutter the fun Way!",
-              style: TextStyle(
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.montserrat(
                 color: Colors.white,
                 fontSize: 20,
-                fontWeight: FontWeight.normal,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          TextButton(
-            onPressed: () {},
-            child: const Text(
-              "Start Quiz",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.normal,
-              ),
+          TextButton.icon(
+            onPressed: startQuiz,
+            icon: const Icon(Icons.arrow_right_alt),
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.white,
             ),
+            label: const Text("Start Quiz"),
           )
         ],
       ),
