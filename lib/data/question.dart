@@ -2,11 +2,11 @@ import 'package:quiz_app/models/quiz_question.dart';
 
 const questionList = [
   QuizQuestion(
-    question: "Sebutkan nama hewan yang memiliki kontol?",
+    question: "Siapa presiden Indonesia ke-7?",
     answer: [
-      "Jembut",
-      "Sapi",
-      "Kontol",
+      "Jokowi",
+      "Prabowo",
+      "Annies",
     ],
   ),
   QuizQuestion(
@@ -16,5 +16,5 @@ const questionList = [
       "2",
       "4",
     ],
-  )
+  ),
 ];

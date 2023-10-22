@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/quiz_question_screen.dart';
+import 'package:quiz_app/results_screen.dart';
 import 'package:quiz_app/start_screen.dart';
 import 'package:quiz_app/data/question.dart';
 
@@ -23,39 +24,57 @@ class _QuizState extends State<Quiz> {
   // }
 
   // Second Option
-  var activeScreen = "start-screen";
-  List<String> selectedAnswer = [];
+  List<String> selectedAnswers = [];
+  String? activeScreen;
 
   void switchScreen() {
     setState(() {
-      selectedAnswer = [];
-      activeScreen = "question-screen";
+      activeScreen = 'questions-screen';
     });
   }
 
   void chooseAnswer(String answer) {
-    selectedAnswer.add(answer);
-    if (selectedAnswer.length == questionList.length) {
+    selectedAnswers.add(answer);
+
+    if (selectedAnswers.length == questionList.length) {
       setState(() {
-        activeScreen = "start-screen";
+        activeScreen = 'result-screen';
       });
     }
   }
 
+  void restartQuiz() {
+    setState(() {
+      selectedAnswers = [];
+      activeScreen = "start-screen";
+    });
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
+    Widget screenWidget = StartScreen(
+      data: switchScreen,
+    );
+
+    if (activeScreen == 'questions-screen') {
+      screenWidget = QuestionScreen(
+        data: chooseAnswer,
+      );
+    }
+
+    if (activeScreen == 'result-screen') {
+      screenWidget = ResultScreen(
+        chosenAnswer: selectedAnswers,
+        restart: restartQuiz,
+      );
+    }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
           scaffoldBackgroundColor: const Color.fromARGB(255, 98, 0, 190)),
-      home: Scaffold(
-        body: activeScreen == "start-screen"
-            ? StartScreen(startQuiz: switchScreen)
-            : QuestionScreen(
-                answerQuiz: chooseAnswer,
-              ),
-      ),
+      home: Scaffold(body: screenWidget),
     );
   }
 }
